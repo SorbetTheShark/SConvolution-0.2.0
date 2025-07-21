@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&family=Rubik+Wet+Paint&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&family=VT323&display=swap');
+
+VT323 {
+    font-family: "VT323", monospace;
+    font-weight: 400;
+    font-style: normal;
+}
+
+RGlitch {
+    font-family: "Rubik Glitch", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+SourGummy {
+    font-family: "Sour Gummy", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+RWetPaint {
+    font-family: "Rubik Wet Paint", serif;
+    font-weight: 400;
+    font-style: normal;
+}

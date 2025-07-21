@@ -1,0 +1,29 @@
+crimson {
+    color: crimson;
+    text-shadow: 0 0 2px crimson
+}
+
+navy {
+    color: navy;
+    text-shadow: 0 0 2px navy
+}
+
+forest {
+    color: forestgreen;
+    text-shadow: 0 0 2px forestgreen
+}
+
+crazedCrimson {
+    color: crimson;
+    text-shadow: 0 0 3px purple
+}
+
+nocturnalNavy {
+    color: navy;
+    text-shadow: 0 0 3px darkmagenta;
+}
+
+flamingForest {
+    color: forestgreen;
+    text-shadow: 0 0 3px orangered
+}
