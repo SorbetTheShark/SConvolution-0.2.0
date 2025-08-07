@@ -25,7 +25,7 @@ addLayer("money", {
     baseResource: "Points",
     baseAmount() {return player.points},
     requires: new Decimal(10),
-    exponent: 0.445,
+    exponent: 0.475,
     roundUpCost: true,
     resetDescription: "Reset current Points for ",
     microtabs: {
@@ -64,10 +64,10 @@ addLayer("money", {
             description: "Point gain is stronger based on current funds.",
             cost: new Decimal(3),
             effect() {
-                let logBase = new Decimal(3)
+                let logBase = new Decimal(2.8)
                 if (hasUpgrade("money", 43)) logBase = logBase.div(1.25)
-                let base = player.money.points.add(1).log(logBase).add(1)
-                if (hasUpgrade("money", 21)) base = player.money.points.add(25).pow(2).log(logBase).add(3.75)
+                let base = player.money.points.add(1).pow(1.15).log(logBase).add(1)
+                if (hasUpgrade("money", 21)) base = player.money.points.add(25).pow(2.05).log(logBase).add(3.75)
                 if (hasUpgrade("money", 13)) base = base.times(upgradeEffect("money", 12))
                 if (hasUpgrade("money", 14)) base = base.pow(1.5)
                 if (hasUpgrade("money", 23)) base = base.times(upgradeEffect("money", 23))

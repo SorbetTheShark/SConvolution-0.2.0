@@ -21,8 +21,8 @@ let modInfo = {
 
 
 let VERSION = {
-	num: "0.1.0",
-	name: "Oops, Just the First Layer",
+	num: "0.1.1",
+	name: "Money Money Money",
 	withoutName: "",
 }
 
@@ -34,7 +34,14 @@ let changelog = (
 	<h3><RWetPaint> v0.1.0 (Oops, Just the First Layer) </RWetPaint></h3> <br><br>
 	Added Funding Layer <br>
 	Added Achievements Layer <br>
-	<crimson style="text-shadow: 0 0 3px purple"> Current Endgame: 7 Destroyed Universes
+	<crimson style="text-shadow: 0 0 3px purple"> Current Endgame: 7 Destroyed Universes </crimson>
+
+	<br><br><br>
+
+	<h3><RWetPaint> v0.1.1 (Money Money Money) </RWetPaint></h3> <br><br>
+	Tweaked funding cost scaling <br>
+	Tweaked upgrade 1-1's effect <br>
+	<crimson style="text-shadow: 0 0 3px purple"> Current Endgame: 7 Destroyed Universes </crimson>
 	`
 )
 
@@ -74,7 +81,6 @@ setInterval(function() {
 function addedPlayerData() { return {
 	cX: 0,
 	cY: 0,
-
 }}
 
 var displayThings
