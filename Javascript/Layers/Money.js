@@ -44,7 +44,7 @@ addLayer("money", {
         player.money.buffDisplay = ""
         if (hasUpgrade("money", 11)) player.money.buffDisplay += `Total Boost from <crimson>Upgrade 1-1</crimson>: x${format(upgradeEffect("money", 11))} <crimson>Points</crimson> <br>`
         if (hasUpgrade("money", 12)) player.money.buffDisplay += `Total Boost from <crimson>Upgrade 1-2</crimson>: x${format(upgradeEffect("money", 12))} <crimson>Money</crimson> <br>`
-        if (hasUpgrade("money", 23)) player.money.buffDisplay += `Total Boost from <crimson>Upgrade 2-3</crimson>: x${format(upgradeEffect("money", 23))} to <crimson>Upgrade 1-1</crimson>, <crimson>Upgrade 1-2</crimson> Effect <br>`
+        if (hasUpgrade("money", 23)) player.money.buffDisplay += `Total Boost from <crimson>Upgrade 2-3</crimson>: x${format(upgradeEffect("money", 23))} to <crimson>Upgrade 1-1 & Upgrade 1-2</crimson> Effect <br>`
         if (hasUpgrade("money", 33)) player.money.buffDisplay += `Total Boost from <crimson>Upgrade 3-3</crimson>: x${format(upgradeEffect("money", 33))} to <crimson>Upgrade 1-1</crimson> Effect`
 
     },
@@ -61,7 +61,7 @@ addLayer("money", {
     upgrades: {
         11: {
             title: "<nocturnalNavy/>1-1",
-            description: "Point gain is stronger based on current funds.",
+            description: "Point gain is stronger based on current Funds.",
             cost: new Decimal(3),
             effect() {
                 let logBase = new Decimal(2.8)
@@ -78,13 +78,14 @@ addLayer("money", {
                 if (hasMilestone("universe", 13)) base = base.times(0.95)
                 if (hasUpgrade("money", 51)) base = base.times(2)
                 if (hasMilestone("universe", 16)) base = base.times(buyableEffect("money", 12))
+                if (hasMilestone("universe", 19)) base = base.times(2)
                 return base
             }
         },
 
         12: {
             title: "<nocturnalNavy/>1-2",
-            description: "Gain more funds on reset based on best funds.",
+            description: "Gain more funds on reset based on best Funds.",
             cost: new Decimal(12),
             effect() {
                 let logBase = new Decimal(225)
@@ -133,9 +134,9 @@ addLayer("money", {
             cost: new Decimal(1000),
             effect() {
                 let powBase = new Decimal(0.25)
-                if (hasUpgrade("money", 31)) powBase = powBase.add(0.15)
+                if (hasUpgrade("money", 31)) powBase = powBase.add(0.2)
                 let logBase = new Decimal(5000)
-                if (hasUpgrade("money", 31)) logbase = logBase.sub(650)
+                if (hasUpgrade("money", 31)) logbase = logBase.sub(750)
                 let base = player.points.add(1).pow(powBase).log(logBase).add(1)
                 if (hasUpgrade("money", 24)) base = base.times(1.1)
                 if (hasUpgrade("money", 34)) base = base.times(1.2)
@@ -230,6 +231,8 @@ addLayer("money", {
         if (hasMilestone("universe", 11)) base = base.times(0.9)
         if (hasMilestone("universe", 14)) base = base.times(buyableEffect(this.layer, 11))
         if (hasMilestone("ach", 11)) base = base.times(2)
+        if (hasMilestone("universe", 18)) base = base.times(player.booster.buffList[1])
+        if (hasMilestone("universe", 19)) base = base.times(0.85)
         return base
     },
     prestigeNotify() {
@@ -238,8 +241,8 @@ addLayer("money", {
 
     buyables: {
         11: {
-            title() {return jarbler("Desolate Rift from Mindustry", "αβξδεφγηιςκλμνοπθρστυωωχψζΑΒΞΔΕΦΓΗΙJΚΛΜΝΟΠΘΡΣΤΥΩΩΧΨΖ") + `<br><br> Level ${getBuyableAmount("money", this.id)}/${this.purchaseLimit()}<br>`},
-            display() {return `Increase funding gain by 15% per upgrade level. This effect stacks multiplicatively. <br><br> Cost: ${format(this.cost())} Money <br><br> Effect: ${format(this.effect())}x Funds`},
+            title() {return jarbler("Desolate Rift", "αβξδεφγηιςκλμνοπθρστυωωχψζΑΒΞΔΕΦΓΗΙJΚΛΜΝΟΠΘΡΣΤΥΩΩΧΨΖ") + `<br><br> Level ${getBuyableAmount("money", this.id)}/${this.purchaseLimit()}<br>`},
+            display() {return `Increase funding gain by ${format(this.power().times(100))}% per upgrade level. This effect stacks multiplicatively. <br><br> Cost: ${format(this.cost())} Money <br><br> Effect: ${format(this.effect())}x Funds`},
             purchaseLimit() {
                 let base = 100
 
@@ -251,6 +254,7 @@ addLayer("money", {
                 let mulBase = new Decimal(1.77)
 
                 if (hasMilestone("universe", 16)) mulBase = mulBase.times(1.1)
+                if (hasMilestone("universe", 24)) mulBase = mulBase.times(1.05)
 
                 return baseCost.times(mulBase.pow(expBase))
             },
@@ -259,19 +263,24 @@ addLayer("money", {
                 player.money.points = player.money.points.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            power() {
+                let base = new Decimal(0.15)
+                if (hasUpgrade("booster", 13)) base = base.times(1.2)
+                return base
+            },
             effect() {
-                let base = new Decimal(1.15)
+                let base = new Decimal(1).add(this.power())
                 base = base.pow(getBuyableAmount(this.layer, this.id))
                 return base
             }
         },
 
         12: {
-            title() {return jarbler("Planetary Terminal from Mindustry", "αβξδεφγηιςκλμνοπθρστυωωχψζΑΒΞΔΕΦΓΗΙJΚΛΜΝΟΠΘΡΣΤΥΩΩΧΨΖ") + `<br><br> Level ${getBuyableAmount(this.layer, this.id)}/${this.purchaseLimit()}<br>`},
-            display() {return `Increase <b>Upgrade 1-1</b>'s effect by 4.5% per upgrade level. This effect stacks multiplicatively. <br><br> Cost: ${format(this.cost())} Money <br><br> Effect: ${format(this.effect())}x Upgrade 1-1's effect`},
+            title() {return jarbler("Planetary Terminal", "αβξδεφγηιςκλμνοπθρστυωωχψζΑΒΞΔΕΦΓΗΙJΚΛΜΝΟΠΘΡΣΤΥΩΩΧΨΖ") + `<br><br> Level ${getBuyableAmount(this.layer, this.id)}/${this.purchaseLimit()}<br>`},
+            display() {return `Increase <b>Upgrade 1-1</b>'s effect by ${format(this.power().times(100))}% per upgrade level. This effect stacks multiplicatively. <br><br> Cost: ${format(this.cost())} Money <br><br> Effect: ${format(this.effect())}x Upgrade 1-1's effect`},
             purchaseLimit() {
                 let base = 70
-
+                if (hasMilestone("universe", 23)) base = base + 30
                 return base
             },
             cost() {
@@ -279,6 +288,8 @@ addLayer("money", {
                 let expBase = new Decimal(getBuyableAmount(this.layer, this.id))
                 let mulBase = new Decimal(1.33)
 
+                if (hasMilestone("universe", 17)) mulBase = mulBase.times(1.15)
+
                 return baseCost.times(mulBase.pow(expBase))
             },
             canAfford() {return player.money.points.gte(this.cost())},
@@ -286,11 +297,19 @@ addLayer("money", {
                 player.money.points = player.money.points.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
+            power() {
+                let base = new Decimal(0.045)
+                if (hasUpgrade("booster", 13)) base = base.times(1.2)
+                return base
+            },
             effect() {
-                let base = new Decimal(1.045)
+                let base = new Decimal(1).add(this.power())
                 base = base.pow(getBuyableAmount(this.layer, this.id))
                 return base
             }
         }
-    }
+    },
+    branches: [["booster", 2]],
+    autoUpgrade() {return hasUpgrade("booster", 24)}
+    
 })

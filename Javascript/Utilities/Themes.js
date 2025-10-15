@@ -1,5 +1,5 @@
 // ************ Themes ************
-var themes = ["Default", "Aqua"]
+var themes = ["Default", "Aqua", "Potassium"]
 
 var colors = {
 	Default: {
@@ -22,6 +22,17 @@ var colors = {
 		background: "#001f3f",
 		background_tooltip: "rgba(0, 15, 31, 0.75)",
 	},
+	Potassium: {
+		1: "#ffee00",
+		2: "#c1cf00",
+		3: "#9aa500",
+		color: "#059b00",
+		points: "#058b00",
+		locked: "#028b47",
+		background: "#e5ff00",
+		background_tooltip: "rgba(0, 15, 31, 0.75)",
+
+	}
 }
 function changeTheme() {
 

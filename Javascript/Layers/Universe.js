@@ -6,8 +6,23 @@ addLayer("universe", {
 
         symbol: "",
 
-        anger: new Decimal(1)
+        anger: new Decimal(1),
+
+        buffDisplay: "",
     }},
+    update() {
+        player.universe.buffDisplay = ""
+        if (hasMilestone("universe", 14)) {
+            let base = player.universe.anger
+            if (hasMilestone("universe", 15)) base = base.pow(2)
+            if (hasMilestone("universe", 18)) base = base.pow(2)
+            player.universe.buffDisplay += `Total boost from <crimson>Milestone 4</crimson>: x${format(base)} Overflow Cost <br>`
+        }
+
+
+        player.universe.symbol = `Universe ${player.universe.points.add(1)}`
+
+    },
     color: "#5A5A5A",
     symbol() {return player.universe.symbol},
     layerShown: true,
@@ -24,17 +39,41 @@ addLayer("universe", {
     baseResource: "Points",
     baseAmount() {return player.points},
     requires: new Decimal(100000),
-    base: 5.555,
-    exponent: 1.09,
+    base: 5.455,
+    exponent: 1.08,
     roundUpCost: true,
     prestigeButtonText() {return `Destroy current universe and reset ALL PREVIOUS PROGRESS<br> <br> Overflow Needed: ${formatWhole(player.points)} / ${format(getNextAt(this.layer, canMax = false, useType = "static"))} Points`},
     microtabs: {
         index: {
             Modifiers: {
-                content: ["blank", ["display-text", () => `<h2> <crazedCrimson> Anger: ${format(player.universe.anger)} </h2> </crazedCrimson>`], "blank", "milestones", "achievements"]
+                content: [
+                    "blank",
+                    ["display-text", () => `<h2> <crazedCrimson> Anger: ${format(player.universe.anger)} </h2> </crazedCrimson>`],
+                    "blank",
+                    ["display-text", () => player.universe.buffDisplay],
+                    "blank",
+                    "milestones", 
+                    "achievements"
+                ]
+            },
+
+            Replay: {
+                content: [
+                    "blank", "clickables"
+                ]
             }
         }
     },
+    clickables: {
+        11: {
+            display() {return "<h1/>Replay Universe 11 Speech"},
+            style: {"width":"600px", "height":"50px", "border-radius":"0"},
+            canClick() {return player.universe.points.gte(10)},
+            unlocked() {return this.canClick()},
+            onClick() {doSpeech(1)}
+        }
+    },
+
     tabFormat: [
         "main-display",
         "prestige-button",
@@ -53,9 +92,6 @@ addLayer("universe", {
     tooltip: "Multiverse",
     branches: [["money", 2]],
     nodeStyle() {return {"width":"350px", "border-radius":"15px"}},
-    update() {
-        player.universe.symbol = `Universe ${player.universe.points.add(1)}`
-    },
     milestones: {
         11: {
             requirementDescription: "1 Destroyed Universe",
@@ -96,22 +132,98 @@ addLayer("universe", {
             unlocked() {return player.universe.points.gte(4)}
         },
 
-         16: {
+        16: {
             requirementDescription: "6 Destroyed Universes",
             done() {return player.universe.points.gte(6)},
             effectDescription() {return `<b>Desolate Rift</b> buyable in <nocturnalNavy>M Node</nocturnalNavy> scales 10% faster in cost. <br><crazedCrimson style="text-shadow: ${player.cX}px ${player.cY}px 3px purple"/> Unlock another buyable in M Node and 1 Achievement.`},
             onComplete() {player.universe.anger = player.universe.anger.times(1.6)},
             unlocked() {return player.universe.points.gte(5)}
-         }
+        },
+
+        17: {
+            requirementDescription: "7 Destroyed Universes",
+            done() {return player.universe.points.gte(7)},
+            effectDescription() {return `<b>Planetary Terminal</b> buyable in <nocturnalNavy>M Node</nocturnalNavy> scales 15% faster in cost. <br><crazedCrimson style="text-shadow: ${player.cX}px ${player.cY}px 3px purple"/> Unlock a new layer, the layer's first effect, and the first upgrade.`},
+            onComplete() {player.universe.anger = player.universe.anger.times(1.7)},
+            unlocked() {return player.universe.points.gte(6)}
+        },
+
+        18: {
+            requirementDescription: "8 Destroyed Universes",
+            done() {return player.universe.points.gte(8)},
+            effectDescription() {return `Milestone 4's debuff is squared again. <br> <crazedCrimson style="text-shadow: ${player.cX}px ${player.cY}px 3px purple"/> Unlock an upgrade in BST Node, along with another effect and achievements.`},
+            onComplete() {player.universe.anger = player.universe.anger.times(1.8)},
+            unlocked() {return player.universe.points.gte(7)}
+        },
+
+        19: {
+            requirementDescription: "9 Destroyed Universes",
+            done() {return player.universe.points.gte(9)},
+            effectDescription() {return `Gain 15% less funds on <nocturnalNavy>M Node</nocturnalNavy> reset. <br> <crazedCrimson style="text-shadow: ${player.cX}px ${player.cY}px 3px purple"/> Unlock more BST Node upgrades and Upgrade 1-1 is twice as effective.`},
+            onComplete() {player.universe.anger = player.universe.anger.times(1.9)},
+            unlocked() {return player.universe.points.gte(8)}
+        },
+
+        20: {
+            requirementDescription: "10 Destroyed Universes",
+            done() {return player.universe.points.gte(10)},
+            effectDescription() {return `<flamingForest>Don't make this harder than it has to be.</flamingForest> <br> <crazedCrimson style="text-shadow: ${player.cX}px ${player.cY}px 3px purple"/> A little bit of everything in BST Node, along with more achievements.`},
+            onComplete() {
+                player.universe.anger = player.universe.anger.times(2.0)
+                doSpeech(1)
+            },
+            unlocked() {return player.universe.points.gte(9)}
+        },
+
+        21: {
+            requirementDescription: "11 Destroyed Universes",
+            done() {return player.universe.points.gte(11)},
+            effectDescription() {return `The cost of boosters scale 5% faster multiplicatively. <br> <crazedCrimson style="text-shadow: ${player.cX}px ${player.cY}px 3px purple"/> Hall Effect Thruster and Cold Gas Thruster's effects are cubed.`},
+            onComplete() {
+                player.universe.anger = player.universe.anger.times(2.1)
+                startleify("Sorbet")
+            },
+            unlocked() {return player.universe.points.gte(10)}
+            
+        },
+
+        22: {
+            requirementDescription: "12 Destroyed Universes",
+            done() {return player.universe.points.gte(12)},
+            effectDescription() {return `The first 2 booster effect's softcaps are twice as strong. <br> <crazedCrimson style="text-shadow: ${player.cX}px ${player.cY}px 3px purple"/> Unlock 2 new booster upgrades and all current softcaps start 1 OoM later.`},
+            onComplete() {
+                player.universe.anger = player.universe.anger.times(2.2)
+                startleify("Sorbet")
+            },
+            unlocked() {return player.universe.points.gte(11)}
+        },
+
+        23: {
+            requirementDescription: "13 Destroyed Universes",
+            done() {return player.universe.points.gte(13)},
+            effectDescription() {return `The third booster effect's softcap starts 1.5 OoMs sooner. <br> <crazedCrimson style="text-shadow: ${player.cX}px ${player.cY}px 3px purple"/> Unlock 1 booster upgrade and Planetary Terminal has 30 more max levels.`},
+            onComplete() {
+                player.universe.anger = player.universe.anger.times(2.3)
+                startleify("Sorbet")
+            }
+        },
+
+        24: {
+            requirementDescription: "14 Destroyed Universes",
+            done() {return player.universe.points.gte(14)},
+            effectDescription() {return `<b>Desolate Rift</b> buyable in <nocturnalNavy>M Node</nocturnalNavy> scales 5% faster in cost. <br> <crazedCrimson style="text-shadow: ${player.cX}px ${player.cY}px 3px purple"/> Unlock 2 Booster upgrades and Ion Thruster's effect is squared.`},
+            onComplete() {
+                player.universe.anger = player.universe.anger.times(2.4),
+                startleify("Sorbet")
+            }
+        }
     },
     gainMult() {
         let base = new Decimal(1)
         if (hasMilestone("universe", 14)) {
-            if (hasMilestone("universe", 15)) {
-                base = base.times(player.universe.anger.pow(2))
-            } else {
-                base = base.times(player.universe.anger)
-            }
+            base = base.times(player.universe.anger)
+            if (hasMilestone("universe", 15)) base = base.pow(2)
+            if (hasMilestone("universe", 18)) base = base.pow(2)
         }
         return base
     },

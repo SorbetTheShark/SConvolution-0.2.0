@@ -50,15 +50,70 @@ addLayer("ach", {
             unlocked() {return hasMilestone("universe", 16)},
             tooltip: "Reach 1.00e9 Money <br><br> (2 AP)",
             onComplete() {player.ach.points = player.ach.points.add(2)}
+        },
+
+        13: {
+            name: "Trillionaire",
+            done() {return player.money.points.gte("e12")},
+            unlocked() {return hasMilestone("universe", 18)},
+            tooltip: "Reach 1.00e12 Money <br><br> (3 AP)",
+            onComplete() {player.ach.points = player.ach.points.add(3)},
+        },
+
+        14: {
+            name: "Quintil-<br>lionaire",
+            done() {return player.money.points.gte("e18")},
+            unlocked() {return hasMilestone("universe", 20)},
+            tooltip: "Reach 1.00e18 Money <br><br> (4 AP)",
+            onComplete() {player.ach.points = player.ach.points.add(4)}
+        },
+
+        21: {
+            name: "Sun",
+            done() {return player.booster.points.gte(5)},
+            unlocked() {return hasMilestone("universe", 18)},
+            tooltip: "Reach 5 Boosters <br><br> (1 AP)",
+            onComplete() {player.ach.points = player.ach.points.add(1)}
+        },
+
+        22: {
+            name: "Alpha Centauri",
+            done() {return player.booster.points.gte(10)},
+            unlocked() {return hasMilestone("universe", 18)},
+            tooltip: "Reach 10 Boosters <br><br> (2 AP)",
+            onComplete() {player.ach.points = player.ach.points.add(2)}
+        },
+
+        23: {
+            name: "Procyon",
+            done() {return player.booster.points.gte(25)},
+            unlocked() {return hasMilestone("universe", 18)},
+            tooltip: "Reach 25 Boosters <br><br> (3 AP)",
+            onComplete() {player.ach.points = player.ach.points.add(3)}
+        },
+
+        24: {
+            name: "Wolf 1061",
+            done() {return player.booster.points.gte(35)},
+            unlocked() {return hasMilestone("universe", 20)},
+            tooltip: "Reach 35 Boosters <br><br> (4 AP)",
+            onComplete() {player.ach.points = player.ach.points.add(4)}
         }
     },
 
     milestones: {
         11: {
             requirementDescription: "3 Achievement Points",
-            effectDescription: "Point gain and funding gain are doubled",
+            effectDescription: "Point gain and funding gain are doubled.",
             done() {return player.ach.points.gte(3)},
             unlocked() {return hasMilestone("universe", 16)}
+        },
+
+        12: {
+            requirementDescription: "10 Achievement Points",
+            effectDescription: "The first booster effect's softcap starts 5,000 later.",
+            done() {return player.ach.points.gte(10)},
+            unlocked() {return hasMilestone("universe", 18)}
         }
     },
 
@@ -67,10 +122,10 @@ addLayer("ach", {
             direction: RIGHT,
             width: 600,
             height: 50,
-            progress() {return player.ach.points.div(3)},
+            progress() {return player.ach.points.div(20)},
             display() {return `Progress to 100% game completion: ${format(this.progress().times(100))}%`},
             fillStyle() {return {'background-color': '#F2E279'}},
             borderStyle() {return {'border-color': '#E0D060', 'border-radius': '50px'}}
         }
-    }
+    },
 })

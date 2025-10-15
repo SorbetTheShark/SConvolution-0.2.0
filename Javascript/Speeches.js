@@ -1,0 +1,25 @@
+async function doSpeech(id) {
+    if (id = 1) {
+        doNotif("Hey...", "???", 5, "gray")
+        await wait(1500)
+        doNotif("Are you there?", "???", 5, "gray")
+        await wait(1500)
+        doNotif("You're there, that's good...", "???", 5, "gray")
+        await wait(1500)
+        doNotif("Allow me to introduce myself human.", "???", 5, "gray")
+        await wait(1500)
+        doNotif("...", "???", 5, "gray")
+        await wait(1500)
+        doNotif("I am Sorbet.", "Sorbet", 5, "gray")
+        await wait(1500)
+        doNotif("I uh...", "Sorbet", 5, "gray")
+        await wait(1500)
+        doNotif("...", "Sorbet", 5, "gray")
+        await wait(1500)
+        doNotif("I just would need some time until I can do that.", "Sorbet", 5, "gray")
+        await wait(1500)
+        doNotif("See you soon human.", "Sorbet", 5, "gray")
+        await wait(15500)
+        doNotif("<small><small><small>Damn that was a horrible first impression...</small></small></small>", "Sorbet", 5, "gray")
+    }
+}

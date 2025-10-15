@@ -5,7 +5,8 @@ var layoutInfo = {
 
     treeLayout: [
         ["universe", "ach"],
-        ["money"]
+        ["money"],
+        ["booster"]
     ]
 
     
