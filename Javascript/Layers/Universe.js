@@ -205,7 +205,8 @@ addLayer("universe", {
             onComplete() {
                 player.universe.anger = player.universe.anger.times(2.3)
                 startleify("Sorbet")
-            }
+            },
+            unlocked() {return player.universe.points.gte(12)}
         },
 
         24: {
@@ -215,7 +216,8 @@ addLayer("universe", {
             onComplete() {
                 player.universe.anger = player.universe.anger.times(2.4),
                 startleify("Sorbet")
-            }
+            },
+            unlocked() {return player.universe.points.gte(13)}
         }
     },
     gainMult() {
