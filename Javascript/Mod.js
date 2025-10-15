@@ -23,8 +23,8 @@ let modInfo = {
 
 
 let VERSION = {
-	num: "0.1.1",
-	name: "Money Money Money",
+	num: "0.2.0",
+	name: "Finally Some More Stuff",
 	withoutName: "",
 }
 
